@@ -1,5 +1,5 @@
 {
-  "name": "graph-api",
+  "name": "quickwiki",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "clean": "rm -rf node_modules ",
     "clean-install": "npm run clean && npm install",
     "lint": "tslint './src/**/*.ts' -p . -c tslint.json",
-    "start": "webpack-dev-server --inline",
+    "start": "clear && node dist/index.js $1",
     "integration": "clear; npm run build && mocha --harmony ./dist/test/integration/**/*.js",
     "unit": "clear; mocha --harmony .dist/test/unit/**/*.js",
     "test": "clear; mocha --harmony ./dist/test/**/lendroid.js",
@@ -16,9 +16,15 @@
   },
   "author": "Faizan Ali",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "htmlparser2": "^3.9.2",
+    "node-fetch": "^2.1.2"
+  },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/node": "^10.3.3",
+    "@types/node-fetch": "^2.1.1",
     "nodemon": "^1.17.5",
     "tslint": "^5.10.0"
   }
