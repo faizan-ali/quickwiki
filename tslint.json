@@ -39,7 +39,7 @@
     "match-default-export-name": true,
     "max-line-length": [
       true,
-      165
+      180
     ],
     "member-ordering": [
       true,
@@ -63,13 +63,14 @@
     "no-invalid-template-strings": true,
     "no-require-imports": true,
     "no-string-literal": true,
+    "no-shadowed-variable": false,
     "no-unnecessary-type-assertion": true,
     "no-unnecessary-qualifier": true,
     "no-unused-variable": true,
     "no-unused-expression": true,
     "number-literal-format": true,
     "object-literal-sort-keys": false,
-    "only-arrow-functions": true,
+    "only-arrow-functions": false,
     "ordered-imports": false,
     "prefer-conditional-expression": true,
     "prefer-object-spread": true,
