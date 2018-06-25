@@ -9,6 +9,7 @@ export interface ITermResponse {
 export interface ITerminal {
     fullscreen: () => {}
     processExit: () => {}
+    windowTitle: (str: string) => void
     grabInput: any
     getCursorLocation: any
     getColor: any
@@ -27,6 +28,7 @@ export interface ITerminal {
     bar: any
     slowTyping: any
     drawImage: any
+    clear: () => void
     // Colors
     red: (text: string) => {}
 }
