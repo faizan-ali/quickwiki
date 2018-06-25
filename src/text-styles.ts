@@ -1,5 +1,5 @@
 import * as Chalk from 'chalk'
-import { IStyle, StyleFunction } from './types/style'
+import { StyleFunction } from './types/style'
 
 const chalk = Chalk.default
 // Applies an array of styling functions to text and returns the final result
@@ -11,7 +11,7 @@ const preLineBreak = text => `\n${text}`
 const postLineBreak = text => `${text}\n`
 const tab = text => `\t${text}`
 
-const style: IStyle = {
+export default {
     error: text => apply([ chalk.red, chalk.bold, postLineBreak, preLineBreak ], text),
     h2: text => apply([ text => `==================== ${text} =====================`, chalk.bold, postLineBreak ], text),
     h3: text => apply([ text => `### ${text} ###`, chalk.bold, chalk.white, tab, preLineBreak ], text),
@@ -21,9 +21,11 @@ const style: IStyle = {
     li: text => apply([ tab, this.green ], text),
     sup: text => apply([ this.green ], text),
     cite: text => apply([ this.green ], text),
+    span: text => apply([ this.green ], text),
+    br: text => apply([ postLineBreak ], text),
     bgRed: chalk.bgRedBright,
     green: chalk.greenBright,
-    reset: chalk.reset
+    reset: chalk.reset,
+    '': text => apply([ this.green ], text),
+    default: text => apply([ this.green ], text)
 }
-
-export default style

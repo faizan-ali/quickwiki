@@ -1,5 +1,3 @@
-import { IResponse } from './types/response'
-import fetch from 'node-fetch'
 import * as htmlparser from 'htmlparser2'
 import applyTagStyles from './applyTagStyles'
 import quickwiki from './quickwiki'
@@ -7,10 +5,12 @@ import { isBlankLine } from './utils'
 import * as term from 'terminal-kit'
 import { ITerminal } from './types/terminal-kit'
 import style from './text-styles'
+import { fetchExtract } from './wikimedia'
+import { IResponse } from './types/wikimedia'
+import { HTMLParserError } from './types/htmlparser'
 
 export const terminal: ITerminal = term.terminal
 
-const BASE_URL = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&rvprop=content&prop=extracts&titles='
 const title = process.argv[ 2 ] || 'Pakistan'
 // These sections are not displayed
 const ignoredSections = [ 'See also', 'Notes', 'References', 'Bibliography' ]
@@ -19,9 +19,12 @@ const init = () => {
     // Maps section titles to subtitles and text
     const map = new Map<string, string>()
 
-    fetch(`${BASE_URL + title}`)
-        .then(res => res.json())
+    fetchExtract(title)
         .then((res: IResponse) => {
+            if (!res || !res.query || !res.query.pages || !res.query.pages[ 0 ] || !res.query.pages[ 0 ].extract) {
+                throw new Error('Invalid/malformed response from WikiMedia API')
+            }
+
             // p, i
             let htmlTag = ''
             // History, Etymology, Economy, denoted by h2 tags
@@ -66,20 +69,23 @@ const init = () => {
                         sectionBuffer.push(applyTagStyles(htmlTag, text))
                     }
                 },
+                // An error while reading a single tag should fail gracefully
                 onerror: error => process.stdout.write(style.error(error.message))
             }, { decodeEntities: true })
-
             parser.write(res.query.pages[ 0 ].extract)
             parser.end()
             // terminal-kit does not exit cleanly with Ctrl + C, this adds a manual exit
             map.set('Exit', 'Exiting')
             quickwiki(map, 'Summary')
-        }).catch(error => console.log(style.error(error)))
+        })
+        .catch(error => {
+            throw new HTMLParserError(error)
+        })
 }
 
 try {
     init()
 } catch (error) {
-    process.stdout.write(`A fatal error occurred: ${JSON.stringify(error)}`)
+    process.stdout.write(style.error(`A fatal error occurred: ${JSON.stringify(error)}`))
     terminal.processExit()
 }
