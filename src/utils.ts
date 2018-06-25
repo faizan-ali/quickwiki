@@ -25,3 +25,12 @@ export const isEnglish = (word: string) => word && /^[A-Za-z]*$/.test(word.trim(
  * @return {boolean}
  */
 export const isBlankLine = (line: string) => line && /^\s*$/.test(line)
+
+/**
+ *
+ * @param {string | undefined} text
+ * @param {boolean} printNewLine
+ * @return {void | boolean}
+ */
+export const print = (text: string | undefined, printNewLine?: boolean) =>
+    (printNewLine || !text) ? console.log(text) : process.stdout.write(text)

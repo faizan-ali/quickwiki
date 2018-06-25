@@ -1,6 +1,6 @@
-import keyWords from './key-words'
+import keyWords from './constants/key-words'
 import style from './text-styles'
-import tags from './tags'
+import tags from './constants/tags'
 import { StyleFunction } from './types/style'
 
 /**

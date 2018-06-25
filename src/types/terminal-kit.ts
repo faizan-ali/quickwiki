@@ -6,8 +6,6 @@ export interface ITermResponse {
     y: number
 }
 
-export class TerminalMenuError extends Error {}
-
 export interface ITerminal {
     fullscreen: () => {}
     processExit: () => {}
