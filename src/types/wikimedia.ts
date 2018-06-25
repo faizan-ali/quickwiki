@@ -1,3 +1,5 @@
+export class WikimediaAPIError extends Error {}
+
 export interface IResponse {
     batchComplete: boolean
     warnings: {

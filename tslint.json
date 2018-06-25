@@ -9,6 +9,7 @@
     "comment-format": [
       true
     ],
+    "curly": false,
     "completed-docs": [
       true,
       {

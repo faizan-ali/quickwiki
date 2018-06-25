@@ -1,6 +1,7 @@
 import keyWords from './key-words'
 import style from './text-styles'
 import tags from './tags'
+import { StyleFunction } from './types/style'
 
 /**
  *
@@ -8,15 +9,17 @@ import tags from './tags'
  * @param {string} text
  * @return {string}
  */
+
 export default function applyTagStyles(htmlTag: string, text: string): string {
     // Highlighting words in red
-    keyWords.forEach(word => text = text.replace(word, style.bold(style.bgRed(word))))
+    keyWords.forEach(word => text = text.replace(word, style.b(style.bgRed(word))))
 
-    Object.keys(tags).forEach(tag => {
+    for (const tag in tags) {
         if (htmlTag === tag && style[ tag ]) {
-            text = style[ tag ](text)
+            text = (style[ tag ] as StyleFunction)(text)
+            break
         }
-    })
+    }
 
     return text
 }
