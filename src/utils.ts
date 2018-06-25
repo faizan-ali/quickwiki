@@ -1,9 +1,9 @@
 /**
  *
- * @param {string} string
+ * @param {string} word
  * @return {"" | boolean}
  */
-export const isWord = (string: string) => string && !/\s/.test(string)
+export const isWord = (word: string) => word && !/\s/.test(word)
 
 /**
  *
@@ -15,6 +15,13 @@ export const numWords = (sentence: string) => sentence ? sentence.trim().split('
 /**
  *
  * @param {string} word
- * @return {"" | boolean}
+ * @return {boolean}
  */
 export const isEnglish = (word: string) => word && /^[A-Za-z]*$/.test(word.trim())
+
+/**
+ *
+ * @param {string} line
+ * @return {boolean}
+ */
+export const isBlankLine = (line: string) => line && /^\s*$/.test(line)

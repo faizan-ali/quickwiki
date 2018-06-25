@@ -1,3 +1,4 @@
+// These words are highlighted in red in the printed text
 export default [
     'nuclear',
     'power',

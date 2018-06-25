@@ -1,13 +1,5 @@
 import keyWords from './key-words'
-import { isEnglish } from './utils'
 import * as style from './text-styles'
-
-/**
- * A section title is a single word that is in English e.g. History, Etymology
- * @param {string} text
- * @return {"" | boolean}
- */
-export const isSectionTitle = (text: string): boolean => Boolean(text && isEnglish(text))
 
 /**
  *

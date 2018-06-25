@@ -20,6 +20,7 @@
     "chalk": "^2.4.1",
     "htmlparser2": "^3.9.2",
     "node-fetch": "^2.1.2",
+    "terminal-kit": "^1.17.11",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
