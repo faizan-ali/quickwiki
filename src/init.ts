@@ -2,50 +2,60 @@ import { IResponse } from './types/response'
 import fetch from 'node-fetch'
 import * as htmlparser from 'htmlparser2'
 import applyTagStyles from './applyTagStyles'
-import { isEnglish } from './utils'
-import { menu } from './interactive'
+import { runInteractiveShell } from './interactive'
 import * as style from './text-styles'
 
 const BASE_URL = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&rvprop=content&prop=extracts&titles='
 const title = process.argv[2] || 'Pakistan'
-
-/**
- * A section title is a single word that is in English e.g. History, Etymology
- * @param {string} text
- * @return {boolean}
- */
-const isSectionTitle = (text: string): boolean => Boolean(text && isEnglish(text))
+// These sections are not displayed
+const ignoredSections = ['See also', 'Notes', 'References', 'Bibliography']
 
 export default function init() {
-    // Gathers the parsed response
-    const buffer: string [] = []
+    // Maps section titles to text
     const map = new Map<string, string>()
 
     fetch(`${BASE_URL + title}`)
         .then(res => res.json())
         .then((res: IResponse) => {
-            // HTML tag e.g. p, i
+            // p, i
             let tag = ''
-            let isTitle = false
+            // History, Etymology, Economy, denoted by h2 tags
+            let isSectionTitle = false
+            // Industry within Economy, denoted by h3 tags
+            let isSectionSubtitle = false
             let prevTitle = 'Summary'
+            let prevSubtitle = ''
+            // Holds all text for a single section
             let sectionBuffer: string [] = []
             const parser = new htmlparser.Parser({
                 onopentag: name => {
                     if (name === 'h2') {
-                        isTitle = true
+                        isSectionTitle = true
+                    } else if (name === 'h3' || name === 'h4') {
+                        isSectionSubtitle = true
                     }
                     tag = name
                 },
                 ontext: text => {
-                    if (isTitle) {
-                        map.set(prevTitle, applyTagStyles('', sectionBuffer.join('')))
+                    if (isSectionTitle) {
+                        isSectionTitle = false
+
+                        if (!ignoredSections.includes(prevTitle)) {
+                            map.set(prevTitle, applyTagStyles('', sectionBuffer.join('')))
+                        }
+
                         prevTitle = text
-                        isTitle = false
                         sectionBuffer = []
+                    } else if (isSectionSubtitle) {
+                        isSectionSubtitle = false
+
+                        if (prevSubtitle) {
+                            sectionBuffer.push(applyTagStyles('h3', text))
+                            prevSubtitle = ''
+                        }
+
+                        prevSubtitle = text
                     } else if (text.length > 3) {
-                        const temp = tag
-                        tag = ''
-                        buffer.push(applyTagStyles(temp, text))
                         sectionBuffer.push(applyTagStyles(tag, text))
                     }
                 },
@@ -54,6 +64,6 @@ export default function init() {
 
             parser.write(res.query.pages[0].extract)
             parser.end()
-            menu(map)
+            runInteractiveShell(map)
         }).catch(console.error)
 }
