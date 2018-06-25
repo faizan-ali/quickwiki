@@ -1,19 +1,29 @@
 import * as Chalk from 'chalk'
+import { IStyle, StyleFunction } from './types/style'
 
 const chalk = Chalk.default
 // Applies an array of styling functions to text and returns the final result
-const apply = (styles: StyleFunction [], text: string): string => styles.reduce((previousValue, currentFunction) => currentFunction(previousValue), text)
-
-export type StyleFunction = (text: string) => string
+const apply = (styles: StyleFunction [], text: string): string =>
+    styles.reduce((previousValue: string, currentFunction: StyleFunction | undefined) =>
+        currentFunction ? currentFunction(previousValue) : previousValue, text)
 
 const preLineBreak = text => `\n${text}`
 const postLineBreak = text => `${text}\n`
+const tab = text => `\t${text}`
 
-export const error: StyleFunction = text => apply([chalk.red, chalk.bold, postLineBreak, preLineBreak], text)
-export const h2: StyleFunction = text => apply([text => `==================== ${text} =====================`, chalk.bold, postLineBreak], text)
-export const h3: StyleFunction = text => apply([text => `   ### ${text} ###`, chalk.bold, chalk.white, preLineBreak], text)
-export const bold: StyleFunction = text => apply([chalk.bold, chalk.whiteBright], text)
-export const italic: StyleFunction = text => apply([chalk.italic, chalk.whiteBright], text)
-export const p: StyleFunction = text => apply([chalk.greenBright, text => `\n---------------------------------------\n${text}`], text)
-export const bgRed: StyleFunction = chalk.bgRedBright
-export const green: StyleFunction = chalk.greenBright
+const style: IStyle = {
+    error: text => apply([ chalk.red, chalk.bold, postLineBreak, preLineBreak ], text),
+    h2: text => apply([ text => `==================== ${text} =====================`, chalk.bold, postLineBreak ], text),
+    h3: text => apply([ text => `### ${text} ###`, chalk.bold, chalk.white, tab, preLineBreak ], text),
+    b: text => apply([ chalk.bold, chalk.whiteBright ], text),
+    i: text => apply([ chalk.italic, chalk.whiteBright ], text),
+    p: text => apply([ chalk.greenBright, text => `---------------------------------------\n${text}`, preLineBreak ], text),
+    li: text => apply([ tab, this.green ], text),
+    sup: text => apply([ this.green ], text),
+    cite: text => apply([ this.green ], text),
+    bgRed: chalk.bgRedBright,
+    green: chalk.greenBright,
+    reset: chalk.reset
+}
+
+export default style
