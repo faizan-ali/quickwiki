@@ -18,14 +18,14 @@ export default {
     b: text => apply([ chalk.bold, chalk.whiteBright ], text),
     i: text => apply([ chalk.italic, chalk.whiteBright ], text),
     p: text => apply([ chalk.greenBright, text => `---------------------------------------\n${text}`, preLineBreak ], text),
-    li: text => apply([ tab, this.green ], text),
-    sup: text => apply([ this.green ], text),
-    cite: text => apply([ this.green ], text),
-    span: text => apply([ this.green ], text),
+    li: text => apply([ tab, chalk.greenBright ], text),
+    sup: text => apply([ chalk.greenBright ], text),
+    cite: text => apply([ chalk.greenBright ], text),
+    span: text => apply([ chalk.bold ], text),
     br: text => apply([ postLineBreak ], text),
     bgRed: chalk.bgRedBright,
     green: chalk.greenBright,
     reset: chalk.reset,
-    '': text => apply([ this.green ], text),
-    default: text => apply([ this.green ], text)
+    '': text => apply([ chalk.greenBright ], text),
+    default: text => apply([ chalk.greenBright ], text)
 }

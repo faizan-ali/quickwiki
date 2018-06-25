@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { WikimediaAPIError } from './types/wikimedia'
+import { WikimediaAPIError } from './types/error'
 
 // Base URL configured with properties needed for any request
 const BASE_URL = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&rvprop=content'
@@ -10,7 +10,7 @@ const BASE_URL = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=
  * @return {Promise<Response>}
  * @throws WikimediaAPIError
  */
-export const fetchExtract = (title: string) => {
+export const fetchTitleExtract = (title: string) => {
     return fetch(`${BASE_URL}&prop=extracts&titles=${title}`)
         .then(res => res.json())
         .catch(error => { throw new WikimediaAPIError(error) })
