@@ -23,7 +23,9 @@ export interface IResponseQueryNormalized {
 }
 
 export interface IResponseQueryPages {
+    ns: number
     pageid: number
     title: string
     extract: string
+    missing: boolean
 }

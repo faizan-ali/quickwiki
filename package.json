@@ -24,7 +24,6 @@
     "typescript": "^2.9.2"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/htmlparser2": "^3.7.31",
     "@types/node": "^10.3.3",
     "@types/node-fetch": "^2.1.1",
