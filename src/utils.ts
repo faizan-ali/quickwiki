@@ -1,3 +1,5 @@
+import { terminal } from './index'
+
 /**
  *
  * @param {string} word
@@ -34,3 +36,13 @@ export const isBlankLine = (line: string) => line && /^\s*$/.test(line)
  */
 export const print = (text: string | undefined, printNewLine?: boolean) =>
     (printNewLine || !text) ? console.log(text) : process.stdout.write(text)
+
+/**
+ *
+ * @return {{}}
+ */
+export const exitTerminal = () => {
+    terminal.clear()
+    terminal.grabInput(false)
+    terminal.processExit()
+}

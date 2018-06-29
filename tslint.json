@@ -69,7 +69,7 @@
     "no-unnecessary-type-assertion": true,
     "no-unnecessary-qualifier": true,
     "no-unused-variable": true,
-    "no-unused-expression": true,
+    "no-unused-expression": false,
     "number-literal-format": true,
     "object-literal-key-quotes": false,
     "object-literal-sort-keys": false,

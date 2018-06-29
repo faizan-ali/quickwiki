@@ -1,8 +1,9 @@
 import { ITermResponse } from './types/terminal-kit'
 import { terminal } from './index'
 import style from './text-styles'
-import { print } from './utils'
+import { exitTerminal, print } from './utils'
 import { MappingError, TerminalMenuError } from './types/error'
+import { store } from './services/store'
 
 /**
  *
@@ -12,7 +13,7 @@ import { MappingError, TerminalMenuError } from './types/error'
  */
 export default function quickwiki(map: Map<string, string>, key = 'Summary'): void {
     terminal.windowTitle(key)
-    if (key === 'Exit') terminal.processExit()
+    if (key === 'Exit') exitTerminal()
     else {
         terminal.clear()
         if (map.has(key)) {
@@ -20,9 +21,12 @@ export default function quickwiki(map: Map<string, string>, key = 'Summary'): vo
             print(map.get(key), true)
         } else throw new MappingError(`An invalid section was queried - ${key}\n\nExiting`)
         // Prints out a menu of all section titles
-        terminal.singleColumnMenu([ ...map.keys() ], {}, (error, response: ITermResponse) => {
+        const singleColumnMenu = terminal.singleColumnMenu([ ...map.keys() ], { continueOnSubmit: false }, (error: Error, response: ITermResponse) => {
+            if (!response) throw new TerminalMenuError('Callback params undefined')
             if (error) throw new TerminalMenuError(JSON.stringify(error))
             else quickwiki(map, response.selectedText)
         })
+
+        store.setMenu(singleColumnMenu)
     }
 }

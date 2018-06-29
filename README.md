@@ -6,10 +6,15 @@ Displays a summary of the query along with a selectable menu of sections.
 Highlights keywords in `/src/key-words.ts` in red for quick skims
 
 ## Usage
+`npm install quickwikip`
 
 `npm start {QUERY}` e.g. `npm start democracy`
 
 ![alt text](/quickwiki.png "Screenshot")
+
+## Keys:
+* Exit: `e` or `Esc`
+* New query: `q` followed by query followed by `Enter`
 
 ## Built With
 

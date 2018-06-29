@@ -9,8 +9,9 @@ export interface ITermResponse {
 export interface ITerminal {
     fullscreen: () => {}
     processExit: () => {}
+    on: (text: string, func: OnKeyFunction) => void
     windowTitle: (str: string) => void
-    grabInput: any
+    grabInput: (grab: boolean) => void
     getCursorLocation: any
     getColor: any
     setColor: any
@@ -22,7 +23,7 @@ export interface ITerminal {
     fileInput: any
     singleLineMenu: any
     singleRowMenu: any
-    singleColumnMenu: (menuItems: string [], options: {}, callback: (error, response: ITermResponse) => void) => {}
+    singleColumnMenu: (menuItems: string [], options: ISingleColumnMenuOptions, callback: (error: Error, response: ITermResponse) => void) => ISingleColumnMenu
     gridMenu: any
     progressBar: any
     bar: any
@@ -31,4 +32,22 @@ export interface ITerminal {
     clear: () => void
     // Colors
     red: (text: string) => {}
+}
+
+export type OnKeyFunction = (name: string, matches: string [], data: IOnKeyFunctionData) => void
+
+interface IOnKeyFunctionData {
+    isCharacter: boolean
+    codepoint: number
+    code: number
+}
+
+export interface ISingleColumnMenu {
+    abort: () => void
+    on: (text: string, func: (data: any) => void) => void
+}
+
+interface ISingleColumnMenuOptions {
+    exitOnUnexpectedKey?: boolean
+    continueOnSubmit?: boolean
 }
