@@ -4,8 +4,8 @@ import { StyleFunction } from './types/style'
 const chalk = Chalk.default
 // Applies an array of styling functions to text and returns the final result
 const apply = (styles: StyleFunction [], text: string): string =>
-    styles.reduce((previousValue: string, currentFunction: StyleFunction | undefined) =>
-        currentFunction ? currentFunction(previousValue) : previousValue, text)
+    styles.reduce((previous: string, style: StyleFunction | undefined) =>
+        style ? style(previous) : previous, text)
 
 const preLineBreak = text => `\n${text}`
 const postLineBreak = text => `${text}\n`
@@ -27,5 +27,5 @@ export default {
     green: chalk.greenBright,
     reset: chalk.reset,
     '': text => apply([ chalk.greenBright ], text),
-    default: text => apply([ chalk.greenBright ], text)
+    default: text => apply([ chalk.greenBright ], text),
 }

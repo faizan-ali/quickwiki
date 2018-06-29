@@ -34,7 +34,7 @@ export const parse = (res: IResponse): Map<string, string> => {
 
             htmlTag = name
         },
-        // TODO: This really needs a couple tests
+        // TODO: This really needs a couple tests and a refactor
         ontext: text => {
             if (isSectionTitle) {
                 isSectionTitle = false
