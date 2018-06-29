@@ -13,7 +13,7 @@ Highlights keywords in `/src/key-words.ts` in red for quick skims
 ![alt text](/quickwiki.png "Screenshot")
 
 ## Keys:
-* Exit: `e` or `Esc`
+* Exit: `Esc` or `Ctrl+C`
 * New query: `q` followed by query followed by `Enter`
 
 ## Built With

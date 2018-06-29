@@ -1,4 +1,5 @@
 import store from './services/store'
+import style from './text-styles'
 
 const terminal = store.getTerminal()
 /**
@@ -39,11 +40,16 @@ export const print = (text: string | undefined, printNewLine?: boolean) =>
     (printNewLine || !text) ? console.log(text) : process.stdout.write(text)
 
 /**
- *
- * @return {{}}
+ * Clears screen
+ * If param is defined, prints error
+ * If param is not defined, exits program
  */
-export const exitTerminal = () => {
+export const exitTerminal = (error?: Error) => {
     terminal.clear()
-    terminal.grabInput(false)
-    terminal.processExit()
+    if (error) {
+        print(style.error(`A fatal error occurred: ${error.message.replace('Error: ', '')}`))
+    } else {
+        terminal.grabInput(false)
+        terminal.processExit()
+    }
 }
