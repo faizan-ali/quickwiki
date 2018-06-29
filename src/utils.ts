@@ -1,5 +1,6 @@
-import { terminal } from './index'
+import store from './services/store'
 
+const terminal = store.getTerminal()
 /**
  *
  * @param {string} word

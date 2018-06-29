@@ -1,10 +1,10 @@
 import { ITermResponse } from './types/terminal-kit'
-import { terminal } from './index'
 import style from './text-styles'
 import { exitTerminal, print } from './utils'
 import { MappingError, TerminalMenuError } from './types/error'
-import { store } from './services/store'
+import store from './services/store'
 
+const terminal = store.getTerminal()
 /**
  *
  * @param {Map<string, string>} map Un-styled section titles mapped to styled text
