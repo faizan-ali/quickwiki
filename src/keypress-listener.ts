@@ -2,11 +2,11 @@ import { initQuickwiki } from './index'
 import { exitTerminal } from './utils'
 import store from './services/store'
 import { print } from './utils'
-import keys from './constants/keys'
+import Keys from './constants/Keys'
 
 const terminal = store.getTerminal()
 
-const exitCodes: string [] = [ keys.ctrlC, keys.esc ]
+const exitCodes: string [] = [ Keys.ctrlC, Keys.esc ]
 
 // Kind of static variable
 let isListening = false
@@ -18,40 +18,27 @@ export default function () {
     if (!isListening) {
         isListening = true
         let isQuery = false
-        let queryBuffer: string [] = []
-        console.log('INIT LISTENER')
         isListening = true
         terminal.grabInput(true)
         // Start the keypress listener for the process
         terminal.on('key', name => {
             // Exits terminal if an exit command is given
             if (exitCodes.includes(name)) exitTerminal()
-            // If a query has been triggered by pressing 'q', collects all keystrokes to form a query that is submitted on 'Enter'
-            else if (isQuery) {
-                if (name === keys.enter) {
-                    isQuery = false
-                    // Absolutely crucial otherwise two menus will display
-                    store.getMenu().abort()
-                    initQuickwiki(queryBuffer.join(''))
-                    queryBuffer = []
-                    // Literal backspace for typed query
-                } else if (name === keys.backspace) {
-                    delete queryBuffer[ queryBuffer.length - 1 ]
-                    printQuery(queryBuffer.join(''))
-                } else {
-                    queryBuffer.push(name)
-                    printQuery(queryBuffer.join(''))
-                }
-                // Triggers query
-            } else if (name === keys.q) {
+            // If a query has been triggered by pressing 'q', collects all Keystrokes to form a query that is submitted on 'Enter'
+            else if (!isQuery && name === Keys.q) {
                 isQuery = true
-                printQuery()
+                console.clear()
+                print('Query:\n')
+                const inputField = terminal.inputField({}, (error, input) => {
+                        // Absolutely crucial otherwise two menus will display
+                        store.getMenu().abort()
+                        if (error) throw new Error(error)
+                        isQuery = false
+                        initQuickwiki(input)
+                    }
+                )
+                store.setInputField(inputField)
             }
         })
     }
-}
-
-const printQuery = (query = '') => {
-    console.clear()
-    print(`\n\n\tQuery: ${query}`)
 }
