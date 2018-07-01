@@ -1,7 +1,9 @@
-export default {
-    ctrlC: 'CTRL_C',
-    enter: 'ENTER',
-    esc: 'ESCAPE',
-    backspace: 'BACKSPACE',
-    q: 'q'
+enum Keys {
+    ctrlC = 'CTRL_C',
+    enter = 'ENTER',
+    esc = 'ESCAPE',
+    backspace = 'BACKSPACE',
+    q = 'q'
 }
+
+export default Keys

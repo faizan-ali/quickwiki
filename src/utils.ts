@@ -50,6 +50,7 @@ export const exitTerminal = (error?: Error) => {
         print(style.error(`A fatal error occurred: ${error.message.replace('Error: ', '')}`))
     } else {
         terminal.grabInput(false)
+        store.getMenu() && store.getMenu().abort
         terminal.processExit()
     }
 }

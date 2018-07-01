@@ -11,6 +11,7 @@ const preLineBreak = text => `\n${text}`
 const postLineBreak = text => `${text}\n`
 const tab = text => `\t${text}`
 
+// This is purposefully untyped for IDE auto-completion assistance
 export default {
     error: text => apply([ chalk.red, chalk.bold, postLineBreak, preLineBreak ], text),
     h2: text => apply([ text => `==================== ${text} =====================`, chalk.bold, postLineBreak ], text),
@@ -27,5 +28,5 @@ export default {
     green: chalk.greenBright,
     reset: chalk.reset,
     '': text => apply([ chalk.greenBright ], text),
-    default: text => apply([ chalk.greenBright ], text),
+    default: text => apply([ chalk.greenBright ], text)
 }
