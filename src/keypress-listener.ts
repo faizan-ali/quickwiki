@@ -1,15 +1,16 @@
-import { initQuickwiki } from './index'
+import { DEFAULT_QUERY, initQuickwiki } from './index'
 import { exitTerminal } from './utils'
 import store from './services/store'
 import { print } from './utils'
-import Keys from './constants/Keys'
+import Keys from './constants/keys'
 
 const terminal = store.getTerminal()
 
 const exitCodes: string [] = [ Keys.ctrlC, Keys.esc ]
 
-// Kind of static variable
+// Static variables
 let isListening = false
+
 /**
  * Listens for keyboard events
  * Exits if any key in exitCodes is pressed since terminal-kit does not support Ctrl+C exits
@@ -31,10 +32,12 @@ export default function () {
                 print('Query:\n')
                 const inputField = terminal.inputField({}, (error, input) => {
                         // Absolutely crucial otherwise two menus will display
-                        store.getMenu().abort()
+                        store.getSectionMenu() && store.getSectionMenu().abort()
+                        store.getPagination() && store.getPagination().abort
                         if (error) throw new Error(error)
                         isQuery = false
-                        initQuickwiki(input)
+                        // Ignores blank searches
+                        initQuickwiki(input || DEFAULT_QUERY)
                     }
                 )
                 store.setInputField(inputField)

@@ -1,12 +1,23 @@
-export class MappingError extends Error {}
+class QuickWikiError extends Error {
+    constructor(error: string) {
+        super(error)
+        console.log(this.constructor.name)
+    }
+}
 
-export class HTMLParserError extends Error {}
+export class MappingError extends QuickWikiError {}
 
-export class TerminalMenuError extends Error {}
+export class WikimediaAPIError extends QuickWikiError {}
 
-export class WikimediaAPIError extends Error {}
+export class HTMLParserError extends QuickWikiError {}
 
-export class InvalidQueryError extends Error {
+export class TerminalMenuError extends QuickWikiError {}
+
+export class TerminalSingleColumnMenuError extends QuickWikiError {}
+
+export class TerminalSingleLineMenuError extends QuickWikiError {}
+
+export class InvalidQueryError extends QuickWikiError {
     constructor() {
         super('Invalid query, spelling may be incorrect or no such title found')
     }
