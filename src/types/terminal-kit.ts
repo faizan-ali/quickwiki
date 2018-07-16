@@ -119,7 +119,13 @@ export interface ISingleColumnMenu {
     on: (text: string, func: (data: any) => void) => void
 }
 
+export interface ISingleLineMenu {
+    abort: () => void
+    on: (text: string, func: (data: any) => void) => void
+}
+
 interface ISingleColumnMenuOptions {
     exitOnUnexpectedKey?: boolean
     continueOnSubmit?: boolean
+    keyBindings?: any
 }

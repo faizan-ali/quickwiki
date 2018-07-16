@@ -3,7 +3,12 @@ enum Keys {
     enter = 'ENTER',
     esc = 'ESCAPE',
     backspace = 'BACKSPACE',
-    q = 'q'
+    q = 'q',
+    forwardSlash = '/',
+    upArrow = 'UP',
+    downArrow = 'DOWN',
+    leftArrow = 'LEFT',
+    rightArrow = 'RIGHT',
 }
 
 export default Keys
