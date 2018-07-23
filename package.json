@@ -1,8 +1,8 @@
 {
-  "name": "quickwikip",
-  "version": "0.0.2",
+  "name": "qwikipedia",
+  "version": "0.0.10",
   "description": "Script to read a Wiki page extract in the shell w/ menu navigation to sections",
-  "main": "index.js",
+  "main": "dist/cli.js",
   "repository": "https://github.com/faizan-ali/quickwiki",
   "scripts": {
     "clean": "rm -rf node_modules ",
@@ -16,6 +16,9 @@
   },
   "author": "Faizan Ali",
   "license": "MIT",
+  "bin": {
+    "wiki": "dist/cli.js"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "htmlparser2": "^3.9.2",

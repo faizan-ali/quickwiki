@@ -7,7 +7,9 @@ Highlights keywords in `/src/key-words.ts` in red for quick skims
 
 ## Usage
 
-`npm start {QUERY}` e.g. `npm start democracy`
+`npm install -g qwikipedia` 
+
+`wiki democracy`
 
 ![alt text](/quickwiki.png "Screenshot")
 
