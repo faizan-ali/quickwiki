@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import quickwiki from './quickwiki'
 import { fetchTitleExtract } from './wikimedia'
 import { parse } from './parse'
@@ -14,9 +16,9 @@ export const initQuickwiki = (title: string) =>
 
 try {
     // Title to query for
-    const title = process.argv[ 2 ] || DEFAULT_QUERY
+    const query = process.argv[ 2 ] || DEFAULT_QUERY
     initListener()
-    initQuickwiki(title)
+    initQuickwiki(query)
 } catch (error) {
     exitTerminal(error)
 }

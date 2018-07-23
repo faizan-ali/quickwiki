@@ -1,4 +1,4 @@
-import { DEFAULT_QUERY, initQuickwiki } from './index'
+import { DEFAULT_QUERY, initQuickwiki } from './cli'
 import { exitTerminal } from './utils'
 import store from './services/store'
 import { print } from './utils'
